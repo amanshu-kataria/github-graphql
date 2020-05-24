@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
+import Header from './Header';
+import Nav from './Nav';
+import React from 'react';
 
-class Dashboard extends Component {
-  render() {
-    return <div>Dashboard</div>;
-  }
+export default function Dashboard() {
+  return (
+    <div className="gg__dashboard">
+      <Header />
+      <Nav />
+    </div>
+  );
 }
-
-export default Dashboard;

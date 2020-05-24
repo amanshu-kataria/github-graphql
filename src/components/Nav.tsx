@@ -9,7 +9,7 @@ function Nav() {
     <Menu vertical className="gg__nav">
       {menuItems.map((item, index) => {
         return (
-          <Menu.Item name={item} active={activeItem === index} onClick={() => setActiveItem(index)}>
+          <Menu.Item key={index} name={item} active={activeItem === index} onClick={() => setActiveItem(index)}>
             <Label color={activeItem === index ? 'teal' : 'grey'}>1</Label>
             {item}
           </Menu.Item>

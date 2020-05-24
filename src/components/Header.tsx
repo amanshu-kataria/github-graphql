@@ -11,7 +11,7 @@ function Header() {
       <div className="gg__app-title">Github + GraphQL</div>
       <div className="gg__user-section">
         <span className="gg__user-name">{user.name}</span>
-        <img className="gg__user-picture" src={profilePicture} />
+        <img className="gg__user-picture" src={profilePicture} alt="Profile" />
         <div className="gg__user-dropdown"></div>
       </div>
     </div>

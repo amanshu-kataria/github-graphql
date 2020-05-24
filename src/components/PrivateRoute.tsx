@@ -1,9 +1,9 @@
-import React, { useEffect, Fragment } from 'react';
-import { IRouteProps } from '../interfaces/routes';
-import { Route, Redirect } from 'react-router';
-import { useAuth0 } from './AuthContext';
-import { IAuthContext } from '../interfaces/auth';
+import React from 'react';
 import { ApolloProvider } from '../apolloClient';
+import { IAuthContext } from '../interfaces/auth';
+import { IRouteProps } from '../interfaces/routes';
+import { Redirect, Route } from 'react-router';
+import { useAuth0 } from './AuthContext';
 
 function PrivateRoute({ children, ...rest }: IRouteProps) {
   const { isAuthenticated, loading }: IAuthContext = useAuth0();
