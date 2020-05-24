@@ -1,6 +1,49 @@
 * {
   box-sizing: border-box;
+  font-family: 'Noto Sans', sans-serif;
+  letter-spacing: 1px;
+
+  --main-bg-color: #222831;
+  --primary-font-color: #222831;
+  --secondary-font-color: #eeeeee;
+  --additional-color: #0092ca;
 }
+
 body {
   margin: 0px;
+}
+
+.gg__header {
+  min-width: 100%;
+  height: 60px;
+  background-color: var(--main-bg-color);
+  color: var(--secondary-font-color);
+  display: flex;
+}
+
+.gg__app-title {
+  font-weight: bold;
+  line-height: 60px;
+  padding-left: 15px;
+}
+
+.gg__user-name {
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.gg__user-picture {
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+.gg__user-section {
+  line-height: 60px;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.gg__nav {
+  height: calc(100vh - 60px);
+  margin: 0px !important;
 }
