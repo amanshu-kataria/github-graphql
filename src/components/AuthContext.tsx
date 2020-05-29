@@ -28,6 +28,7 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
         domain: initOptions.domain,
         client_id: initOptions.clientId,
         cacheLocation: initOptions.cacheLocation,
+        redirect_uri: `${window.location.origin}`,
       });
       setAuth0(auth0FromHook);
 
