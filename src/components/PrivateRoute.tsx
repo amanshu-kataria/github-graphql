@@ -3,7 +3,7 @@ import { ApolloProvider } from '../hooks/apolloClient';
 import { IAuthContext } from '../interfaces/auth';
 import { IRouteProps } from '../interfaces/routes';
 import { Redirect, Route } from 'react-router';
-import { useAuth0 } from './AuthContext';
+import { useAuth0 } from '../hooks/AuthContext';
 
 function PrivateRoute({ children, ...rest }: IRouteProps) {
   const { isAuthenticated, loading }: IAuthContext = useAuth0();

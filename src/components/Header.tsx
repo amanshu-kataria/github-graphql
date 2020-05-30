@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAuth0 } from './AuthContext';
 import { IAuthContext } from '../interfaces/auth';
+import { useAuth0 } from '../hooks/AuthContext';
 
 function Header() {
   const { user }: IAuthContext = useAuth0();

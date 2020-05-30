@@ -4,7 +4,7 @@ import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 import React from 'react';
 import { Redirect, Route, Router, Switch } from 'react-router-dom';
-import { useAuth0 } from './components/AuthContext';
+import { useAuth0 } from './hooks/AuthContext';
 import './styles.css';
 import 'semantic-ui-css/semantic.min.css';
 

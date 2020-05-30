@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { IAuthContext } from '../interfaces/auth';
 import { Redirect } from 'react-router';
-import { useAuth0 } from './AuthContext';
+import { useAuth0 } from '../hooks/AuthContext';
 
 const Login = () => {
   const { isAuthenticated, loginWithRedirect }: IAuthContext = useAuth0();
