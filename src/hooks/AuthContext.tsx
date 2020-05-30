@@ -24,30 +24,32 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
 
   useEffect(() => {
     const initAuth0 = async () => {
-      const auth0FromHook: Auth0Client = await createAuth0Client({
-        domain: initOptions.domain,
-        client_id: initOptions.clientId,
-        cacheLocation: initOptions.cacheLocation,
-        redirect_uri: `${window.location.origin}`,
-      });
-      setAuth0(auth0FromHook);
+      if (process.env.REACT_APP_AUTH_DOMAIN && process.env.REACT_APP_AUTH_CLIENT_ID) {
+        const auth0FromHook: Auth0Client = await createAuth0Client({
+          domain: process.env.REACT_APP_AUTH_DOMAIN,
+          client_id: process.env.REACT_APP_AUTH_CLIENT_ID,
+          cacheLocation: 'localstorage',
+          redirect_uri: `${window.location.origin}`,
+        });
+        setAuth0(auth0FromHook);
 
-      if (window.location.search.includes('code=') && window.location.search.includes('state=')) {
-        const { appState } = await auth0FromHook.handleRedirectCallback();
-        onRedirectCallback(appState);
+        if (window.location.search.includes('code=') && window.location.search.includes('state=')) {
+          const { appState } = await auth0FromHook.handleRedirectCallback();
+          onRedirectCallback(appState);
+        }
+
+        const isAuthenticated = await auth0FromHook.isAuthenticated();
+        setIsAuthenticated(isAuthenticated);
+
+        if (isAuthenticated) {
+          const user = await auth0FromHook.getUser();
+          const accessToken = await auth0FromHook.getTokenSilently();
+          setUser(user);
+          setAccessToken(accessToken);
+        }
+
+        setLoading(false);
       }
-
-      const isAuthenticated = await auth0FromHook.isAuthenticated();
-      setIsAuthenticated(isAuthenticated);
-
-      if (isAuthenticated) {
-        const user = await auth0FromHook.getUser();
-        const accessToken = await auth0FromHook.getTokenSilently();
-        setUser(user);
-        setAccessToken(accessToken);
-      }
-
-      setLoading(false);
     };
     initAuth0();
   }, []);

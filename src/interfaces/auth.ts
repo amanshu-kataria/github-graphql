@@ -11,10 +11,7 @@ import {
 export interface IAuthProps {
   children: ReactNode;
   onRedirectCallback: Function;
-  clientId: string;
   redirectUri: string;
-  domain: string;
-  cacheLocation: 'memory' | 'localstorage';
 }
 
 export interface IAuthContext {
