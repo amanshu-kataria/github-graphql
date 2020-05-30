@@ -1,5 +1,5 @@
 import React from 'react';
-import { ApolloProvider } from '../apolloClient';
+import { ApolloProvider } from '../hooks/apolloClient';
 import { IAuthContext } from '../interfaces/auth';
 import { IRouteProps } from '../interfaces/routes';
 import { Redirect, Route } from 'react-router';

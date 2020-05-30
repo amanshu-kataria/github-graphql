@@ -2,21 +2,18 @@ import ApolloClient from 'apollo-client';
 import React, { useContext, useEffect, useState } from 'react';
 import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
-import { IApolloContext } from './interfaces/apollo';
-import { IAuthContext } from './interfaces/auth';
+import { IApolloContext } from '../interfaces/apollo';
 import { InMemoryCache } from 'apollo-boost';
-import { useAuth0 } from './components/AuthContext';
 
 export const ApolloContext = React.createContext({});
 export const useApolloContext = () => useContext(ApolloContext);
 
 export const ApolloProvider = ({ children }: any) => {
   const [client, setClient] = useState();
-  const { getTokenSilently }: IAuthContext = useAuth0();
 
   useEffect(() => {
     const initClient = async () => {
-      const token = await getTokenSilently({});
+      const token = '';
       const link: ApolloLink = createHttpLink({
         uri: 'https://api.github.com/graphql',
         headers: {
@@ -31,11 +28,9 @@ export const ApolloProvider = ({ children }: any) => {
       setClient(apolloClient);
     };
     initClient();
-  }, [getTokenSilently]);
+  }, []);
 
-  const apolloProviderValue: IApolloContext = {
-    client,
-  };
+  const apolloProviderValue: IApolloContext = { client };
 
   return <ApolloContext.Provider value={apolloProviderValue}>{children}</ApolloContext.Provider>;
 };

@@ -1,3 +1,5 @@
+import { ApolloClient } from 'apollo-boost';
+
 export interface IApolloContext {
-  client: any;
+  client?: ApolloClient<any>;
 }
