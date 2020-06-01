@@ -1,5 +1,4 @@
 import App from './App';
-import config from './auth_config.json';
 import history from './utils/history';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -10,13 +9,7 @@ const onRedirectCallback = (appState: any): void => {
 };
 
 ReactDOM.render(
-  <Auth0Provider
-    domain={config.domain}
-    clientId={config.clientId}
-    redirectUri={window.location.origin}
-    onRedirectCallback={onRedirectCallback}
-    cacheLocation={'localstorage'}
-  >
+  <Auth0Provider redirectUri={window.location.origin} onRedirectCallback={onRedirectCallback}>
     <App />
   </Auth0Provider>,
   document.getElementById('root'),
