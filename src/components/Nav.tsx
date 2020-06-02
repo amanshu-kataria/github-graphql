@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import UserContext from '../context/UserContext';
 import { Label, Menu } from 'semantic-ui-react';
 
