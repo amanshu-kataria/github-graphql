@@ -43,8 +43,20 @@ body {
   margin-right: 20px;
 }
 
-.gg__nav {
+.dashboard {
+  display: flex;
+  flex-direction: row;
   height: calc(100vh - 60px);
+  width: 100%;
+}
+
+.dashboard__right-panel {
+  padding: 20px;
+  width: 100%;
+}
+
+.gg__nav {
+  height: 100%;
   margin: 0px !important;
 }
 
