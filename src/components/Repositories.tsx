@@ -1,8 +1,18 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import UserContext from '../context/UserContext';
 import { Button, Divider, Icon, Item, Label, Popup } from 'semantic-ui-react';
 
 export default function Repositories() {
+  const [clonedRepoId, setClonedRepoId] = useState('');
+
+  function onCopyCloneCommand(command: string, repoId: string) {
+    navigator.clipboard.writeText(`git clone ${command}.git`);
+    setClonedRepoId(repoId);
+    setTimeout(() => {
+      setClonedRepoId('');
+    }, 2000);
+  }
+
   return (
     <UserContext.Consumer>
       {(props: any) => (
@@ -27,19 +37,39 @@ export default function Repositories() {
                     <Label>
                       <Icon name="eye" /> {repo.node.watchers.totalCount}
                     </Label>
-                    <Button className="repository__clone" as="div" labelPosition="left">
-                      <Label as="a" basic>
-                        Clone
-                      </Label>
-                      <Button icon>
-                        <Icon name="copy outline" />
-                      </Button>
-                    </Button>
+                    <Popup
+                      content="Copy Clone Command"
+                      position="top right"
+                      inverted
+                      trigger={
+                        <Button
+                          className="repository__clone"
+                          as="div"
+                          labelPosition="left"
+                          size="mini"
+                          onClick={() => {
+                            onCopyCloneCommand(repo.node.url, repo.node.id);
+                          }}
+                        >
+                          <Label as="a" basic>
+                            Clone
+                          </Label>
+                          <Button icon>
+                            <Icon
+                              name={clonedRepoId === repo.node.id ? 'checkmark' : 'copy outline'}
+                              color={clonedRepoId === repo.node.id ? 'green' : 'grey'}
+                            />
+                          </Button>
+                        </Button>
+                      }
+                    />
                   </Item.Extra>
                   <Divider />
                 </Item.Content>
               </Item>
             ))}
+            <Button floated="right" content="Next" primary />
+            <Button floated="right" content="Previous" primary disabled />
           </Item.Group>
         </div>
       )}
