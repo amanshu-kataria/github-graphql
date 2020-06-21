@@ -47,3 +47,26 @@ body {
   height: calc(100vh - 60px);
   margin: 0px !important;
 }
+
+.repositories {
+  overflow-y: scroll;
+  height: 90%;
+  width: 100%;
+  padding: 20px;
+}
+
+.repositories__name {
+  cursor: pointer;
+}
+
+.repositories__name:hover {
+  color: var(--additional-color) !important;
+}
+
+.repository__clone {
+  float: right;
+}
+
+.repositories::-webkit-scrollbar {
+  width: 2px;
+}
