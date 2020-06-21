@@ -13,7 +13,7 @@ export function userProfile() {
         following(first: 20, after: null) {
           ...Following
         }
-        repositories(first: 20, after: null) {
+        repositories(first: 20, after: null, ownerAffiliations: OWNER) {
           ...Repositories
         }
         starredRepositories(first: 20, after: null) {
@@ -32,15 +32,29 @@ export const user = {
   fragments: {
     repositories: gql`
       fragment Repositories on RepositoryConnection {
+        totalCount
         edges {
+          cursor
           node {
+            createdAt
             description
+            id
+            isFork
+            isPrivate
             name
             url
+            stargazers {
+              totalCount
+            }
+            primaryLanguage {
+              color
+              name
+            }
+            watchers {
+              totalCount
+            }
           }
-          cursor
         }
-        totalCount
       }
     `,
     starredRepositories: gql`
