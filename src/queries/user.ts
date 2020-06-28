@@ -100,3 +100,14 @@ export const user = {
     `
   }
 };
+
+export const userRepositories = gql`
+  query($userName: String!, $after: String = null, $before: String = null) {
+    user(login: $userName) {
+      repositories(first: 20, after: $after, before: $before, ownerAffiliations: OWNER) {
+        ...Repositories
+      }
+    }
+  }
+  ${user.fragments.repositories}
+`;
