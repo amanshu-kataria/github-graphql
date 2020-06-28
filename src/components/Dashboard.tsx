@@ -2,12 +2,13 @@ import Header from './Header';
 import Nav from './Nav';
 import React, { useEffect, useState } from 'react';
 import Repositories from './Repositories';
-import UserContext from '../context/UserContext';
 import { IApolloContext } from '../interfaces/apollo';
 import { IAuthContext } from '../interfaces/auth';
+import { ProfileContext } from '../context/profileContext';
 import { useApolloContext } from '../hooks/apolloClient';
 import { useAuth0 } from '../hooks/AuthContext';
 import { userProfile } from '../queries/user';
+import { IUserQueryResponse } from '../interfaces/profile';
 
 export default function Dashboard() {
   const { client }: IApolloContext = useApolloContext();
@@ -24,7 +25,7 @@ export default function Dashboard() {
             userName: user.nickname
           }
         })
-        .then((response: any) => {
+        .then((response: IUserQueryResponse) => {
           const { user } = response.data;
           const userData = {
             followers: user.followers,
@@ -44,7 +45,7 @@ export default function Dashboard() {
   return (
     <div>
       <Header />
-      <UserContext.Provider value={userData}>
+      <ProfileContext.Provider value={userData}>
         {userData.loading ? (
           'Loading ...'
         ) : (
@@ -53,7 +54,7 @@ export default function Dashboard() {
             <div className="dashboard__right-panel">{currentNavItem === 'repositories' && <Repositories />}</div>
           </div>
         )}
-      </UserContext.Provider>
+      </ProfileContext.Provider>
     </div>
   );
 }
