@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import UserContext from '../context/UserContext';
 import { Label, Menu } from 'semantic-ui-react';
 import { NavProps } from '../interfaces/UI';
+import { ProfileContext } from '../context/profileContext';
 
 const menuItems = [
   { label: 'Repositories', prop: 'repositories' },
@@ -19,7 +19,7 @@ function Nav({ onNavItemChange }: NavProps) {
   }
 
   return (
-    <UserContext.Consumer>
+    <ProfileContext.Consumer>
       {(user: any) => (
         <Menu vertical className="gg__nav">
           {menuItems.map((item, index) => {
@@ -32,7 +32,7 @@ function Nav({ onNavItemChange }: NavProps) {
           })}
         </Menu>
       )}
-    </UserContext.Consumer>
+    </ProfileContext.Consumer>
   );
 }
 
