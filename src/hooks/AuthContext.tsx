@@ -6,7 +6,7 @@ import createAuth0Client, {
   RedirectLoginOptions,
   GetTokenSilentlyOptions,
   GetTokenWithPopupOptions,
-  LogoutOptions,
+  LogoutOptions
 } from '@auth0/auth0-spa-js';
 
 const DEFAULT_REDIRECT_CALLBACK = () => window.history.replaceState({}, document.title, window.location.pathname);
@@ -29,7 +29,7 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
           domain: process.env.REACT_APP_AUTH_DOMAIN,
           client_id: process.env.REACT_APP_AUTH_CLIENT_ID,
           cacheLocation: 'localstorage',
-          redirect_uri: `${window.location.origin}`,
+          redirect_uri: `${window.location.origin}`
         });
         setAuth0(auth0FromHook);
 
@@ -89,7 +89,7 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
     loginWithRedirect: ({ ...p }: RedirectLoginOptions) => auth0Client.loginWithRedirect({ ...p }),
     getTokenSilently: ({ ...p }: GetTokenSilentlyOptions) => auth0Client.getTokenSilently({ ...p }),
     getTokenWithPopup: ({ ...p }: GetTokenWithPopupOptions) => auth0Client.getTokenWithPopup({ ...p }),
-    logout: ({ ...p }: LogoutOptions) => auth0Client.logout({ ...p }),
+    logout: ({ ...p }: LogoutOptions) => auth0Client.logout({ ...p })
   };
 
   return <Auth0Context.Provider value={authProviderValue}>{children}</Auth0Context.Provider>;

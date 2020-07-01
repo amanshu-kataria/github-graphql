@@ -17,13 +17,13 @@ export const ApolloProvider = ({ children }: any) => {
       const link: ApolloLink = createHttpLink({
         uri: 'https://api.github.com/graphql',
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
+          Authorization: `Bearer ${token}`
+        }
       });
 
       const apolloClient: ApolloClient<any> = new ApolloClient({
         cache: new InMemoryCache(),
-        link,
+        link
       });
       setClient(apolloClient);
     };

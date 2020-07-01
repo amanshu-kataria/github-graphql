@@ -5,12 +5,12 @@ import {
   GetTokenSilentlyOptions,
   GetTokenWithPopupOptions,
   IdToken,
-  LogoutOptions,
+  LogoutOptions
 } from '@auth0/auth0-spa-js';
 
 export interface IAuthProps {
   children: ReactNode;
-  onRedirectCallback: Function;
+  onRedirectCallback: (appState: any) => void;
   redirectUri: string;
 }
 
