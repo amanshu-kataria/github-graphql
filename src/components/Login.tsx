@@ -17,7 +17,7 @@ const Login = () => {
       ) : (
         <Redirect
           to={{
-            pathname: '/dashboard',
+            pathname: '/dashboard'
           }}
         />
       )}

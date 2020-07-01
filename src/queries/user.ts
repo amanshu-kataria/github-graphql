@@ -1,33 +1,5 @@
 import gql from 'graphql-tag';
 
-export function userProfile() {
-  return gql`
-    query($userName: String!) {
-      user(login: $userName) {
-        bio
-        createdAt
-        email
-        followers(first: 20, after: null) {
-          ...Followers
-        }
-        following(first: 20, after: null) {
-          ...Following
-        }
-        repositories(first: 20, after: null, ownerAffiliations: OWNER) {
-          ...Repositories
-        }
-        starredRepositories(first: 20, after: null) {
-          ...StarredRepositories
-        }
-      }
-    }
-    ${user.fragments.starredRepositories}
-    ${user.fragments.repositories}
-    ${user.fragments.followers}
-    ${user.fragments.following}
-  `;
-}
-
 export const user = {
   fragments: {
     repositories: gql`
@@ -100,6 +72,34 @@ export const user = {
     `
   }
 };
+
+export function userProfile() {
+  return gql`
+    query($userName: String!) {
+      user(login: $userName) {
+        bio
+        createdAt
+        email
+        followers(first: 20, after: null) {
+          ...Followers
+        }
+        following(first: 20, after: null) {
+          ...Following
+        }
+        repositories(first: 20, after: null, ownerAffiliations: OWNER) {
+          ...Repositories
+        }
+        starredRepositories(first: 20, after: null) {
+          ...StarredRepositories
+        }
+      }
+    }
+    ${user.fragments.starredRepositories}
+    ${user.fragments.repositories}
+    ${user.fragments.followers}
+    ${user.fragments.following}
+  `;
+}
 
 export const userRepositories = gql`
   query($userName: String!, $after: String = null, $before: String = null) {
