@@ -1,8 +1,8 @@
-name: Node CI
+name: Running Build
 
 on:
   pull_request:
-    branched: [master, develop]
+    branches: [master, develop]
 
 jobs:
   test_pull_request:
