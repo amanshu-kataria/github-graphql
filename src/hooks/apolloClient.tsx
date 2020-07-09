@@ -9,7 +9,7 @@ export const ApolloContext = React.createContext({});
 export const useApolloContext = () => useContext(ApolloContext);
 
 export const ApolloProvider = ({ children }: any) => {
-  const [client, setClient] = useState();
+  const [client, setClient] = useState<ApolloClient<any> | undefined>();
 
   useEffect(() => {
     const initClient = async () => {
