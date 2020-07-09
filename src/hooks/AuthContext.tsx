@@ -15,9 +15,9 @@ export const Auth0Context = React.createContext({});
 export const useAuth0: any = () => useContext(Auth0Context);
 
 export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_CALLBACK, ...initOptions }: IAuthProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState();
-  const [auth0Client, setAuth0] = useState();
+  const [auth0Client, setAuth0] = useState<Auth0Client | undefined>();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
   const [accessToken, setAccessToken] = useState();
@@ -38,7 +38,7 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
           onRedirectCallback(appState);
         }
 
-        const isAuthenticated = await auth0FromHook.isAuthenticated();
+        const isAuthenticated: boolean = await auth0FromHook.isAuthenticated();
         setIsAuthenticated(isAuthenticated);
 
         if (isAuthenticated) {
@@ -55,42 +55,50 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
   }, []);
 
   const loginWithPopup = async (params = {}) => {
-    setPopupOpen(true);
-    try {
-      await auth0Client.loginWithPopup(params);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setPopupOpen(false);
+    if (auth0Client) {
+      setPopupOpen(true);
+      try {
+        await auth0Client.loginWithPopup(params);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setPopupOpen(false);
+      }
+      const user = await auth0Client.getUser();
+      setUser(user);
+      setIsAuthenticated(true);
     }
-    const user = await auth0Client.getUser();
-    setUser(user);
-    setIsAuthenticated(true);
   };
 
   const handleRedirectCallback = async () => {
-    setLoading(true);
-    await auth0Client.handleRedirectCallback();
-    const user = await auth0Client.getUser();
-    setLoading(false);
-    setIsAuthenticated(true);
-    setUser(user);
+    if (auth0Client) {
+      setLoading(true);
+      await auth0Client.handleRedirectCallback();
+      const user = await auth0Client.getUser();
+      setLoading(false);
+      setIsAuthenticated(true);
+      setUser(user);
+    }
   };
 
-  const authProviderValue: IAuthContext = {
-    isAuthenticated,
-    accessToken,
-    user,
-    loading,
-    popupOpen,
-    loginWithPopup,
-    handleRedirectCallback,
-    getIdTokenClaims: ({ ...p }: GetIdTokenClaimsOptions) => auth0Client.getIdTokenClaims({ ...p }),
-    loginWithRedirect: ({ ...p }: RedirectLoginOptions) => auth0Client.loginWithRedirect({ ...p }),
-    getTokenSilently: ({ ...p }: GetTokenSilentlyOptions) => auth0Client.getTokenSilently({ ...p }),
-    getTokenWithPopup: ({ ...p }: GetTokenWithPopupOptions) => auth0Client.getTokenWithPopup({ ...p }),
-    logout: ({ ...p }: LogoutOptions) => auth0Client.logout({ ...p })
-  };
+  if (auth0Client) {
+    const authProviderValue: IAuthContext = {
+      isAuthenticated,
+      accessToken,
+      user,
+      loading,
+      popupOpen,
+      loginWithPopup,
+      handleRedirectCallback,
+      getIdTokenClaims: ({ ...p }: GetIdTokenClaimsOptions) => auth0Client.getIdTokenClaims({ ...p }),
+      loginWithRedirect: ({ ...p }: RedirectLoginOptions) => auth0Client.loginWithRedirect({ ...p }),
+      getTokenSilently: ({ ...p }: GetTokenSilentlyOptions) => auth0Client.getTokenSilently({ ...p }),
+      getTokenWithPopup: ({ ...p }: GetTokenWithPopupOptions) => auth0Client.getTokenWithPopup({ ...p }),
+      logout: ({ ...p }: LogoutOptions) => auth0Client.logout({ ...p })
+    };
 
-  return <Auth0Context.Provider value={authProviderValue}>{children}</Auth0Context.Provider>;
+    return <Auth0Context.Provider value={authProviderValue}>{children}</Auth0Context.Provider>;
+  } else {
+    return <Auth0Context.Provider value={{}}>{children}</Auth0Context.Provider>;
+  }
 };
