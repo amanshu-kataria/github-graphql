@@ -52,7 +52,8 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
       }
     };
     initAuth0();
-  }, []);
+    // TODO -> remove onRedirectCallback from hooks dependency and find a better solution.
+  }, [onRedirectCallback]);
 
   const loginWithPopup = async (params = {}) => {
     if (auth0Client) {
