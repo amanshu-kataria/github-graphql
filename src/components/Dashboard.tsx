@@ -40,7 +40,7 @@ export default function Dashboard() {
           console.log(err);
         });
     }
-  }, [client]);
+  }, [client, user.nickname]);
 
   return (
     <div>
